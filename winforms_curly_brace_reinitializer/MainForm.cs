@@ -76,13 +76,8 @@ namespace winforms_curly_brace_initialzer
             var n = new { Location = point };
             Debug.Assert(Location.Equals(locB4));
             Debug.Assert(!Location.Equals(point));
-            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-#if !TEST_WITH_CLONE
             doTask(foo.With(new { Location = point, Text = $"Fee {_tstCount++}", BackColor = color }));
-#else
-            doTask(foo.Clone().With(new { Location = point, Text = $"Fee {_tstCount++}", BackColor = color }), isClone: true);
-#endif
         }
 
         private void doTask(MainForm form, bool isClone = false)
@@ -134,6 +129,30 @@ namespace winforms_curly_brace_initialzer
             base.Dispose(disposing);
         }
         object ICloneable.Clone() => Clone();
+
+        private void buttonTestClone_Click(object sender, EventArgs e)
+        {
+            // Generate some test values
+            var point = new Point(Location.X + 25, Location.Y);
+            Color color;
+            switch (_tstCount % 3)
+            {
+                case 0:
+                    color = Color.LightBlue;
+                    break;
+                case 1:
+                    color = Color.LightGreen;
+                    break;
+                default:
+                    color = SystemColors.Control;
+                    break;
+            }
+            // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+            // TEST
+            var foo = this;
+            doTask(foo.Clone().With(new { Location = point, Text = $"Fee {_tstCount++}", BackColor = color }), isClone: true);
+        }
     }
 }
 

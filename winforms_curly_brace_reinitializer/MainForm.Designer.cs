@@ -17,11 +17,12 @@ namespace winforms_curly_brace_initialzer
         private void InitializeComponent()
         {
             this.buttonTest = new System.Windows.Forms.Button();
+            this.buttonTestClone = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonTest
             // 
-            this.buttonTest.Location = new System.Drawing.Point(41, 83);
+            this.buttonTest.Location = new System.Drawing.Point(41, 58);
             this.buttonTest.Name = "buttonTest";
             this.buttonTest.Size = new System.Drawing.Size(112, 34);
             this.buttonTest.TabIndex = 0;
@@ -29,15 +30,26 @@ namespace winforms_curly_brace_initialzer
             this.buttonTest.UseVisualStyleBackColor = true;
             this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
             // 
+            // buttonTestClone
+            // 
+            this.buttonTestClone.Location = new System.Drawing.Point(41, 128);
+            this.buttonTestClone.Name = "buttonTestClone";
+            this.buttonTestClone.Size = new System.Drawing.Size(112, 34);
+            this.buttonTestClone.TabIndex = 0;
+            this.buttonTestClone.Text = "Test Clone";
+            this.buttonTestClone.UseVisualStyleBackColor = true;
+            this.buttonTestClone.Click += new System.EventHandler(this.buttonTestClone_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(478, 244);
+            this.Controls.Add(this.buttonTestClone);
             this.Controls.Add(this.buttonTest);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Main Form";
             this.ResumeLayout(false);
 
         }
@@ -45,6 +57,7 @@ namespace winforms_curly_brace_initialzer
         #endregion
 
         private System.Windows.Forms.Button buttonTest;
+        private System.Windows.Forms.Button buttonTestClone;
     }
 }
 
