@@ -51,6 +51,14 @@ namespace winforms_curly_brace_initialzer
             Debug.Assert(myForm.Text == "foo");
             Debug.Assert(!myForm.AllowDrop);
 
+            // ALTERNATE SYNTAX
+            _ = myForm.With(new
+            {
+                Text = "oof"
+            });
+            Debug.Assert(myForm.Text == "oof");
+
+
             // Generate some test values
             var point = new Point(Location.X + 25, Location.Y);
             Color color;
@@ -154,25 +162,27 @@ namespace winforms_curly_brace_initialzer
             doTask(foo.Clone().With(new { Location = point, Text = $"Fee {_tstCount++}", BackColor = color }), isClone: true);
         }
     }
-}
 
-static class Extensions
-{
-    public static T With<T>(this T @this, object n)
+    static class Extensions
     {
-        var type = typeof(T);
-        foreach (var propSrce in n.GetType().GetProperties())
+        public static T With<T>(this T @this, object anon)
         {
-            var propDest = type.GetProperty(propSrce.Name);
-            if (propDest == null)
+            var type = typeof(T);
+            foreach (var propSrce in anon.GetType().GetProperties())
             {
-                Debug.Assert(false, $"Property '{propSrce.Name}' not found in {type.Name}");
+                var propDest = type.GetProperty(propSrce.Name);
+                if (propDest == null)
+                {
+                    Debug.Assert(
+                        false,
+                        $"Property '{propSrce.Name}' not found in {type.Name}");
+                }
+                else
+                {
+                    propDest.SetValue(@this, propSrce.GetValue(anon));
+                }
             }
-            else
-            {
-                propDest.SetValue(@this, propSrce.GetValue(n));
-            }
+            return @this;
         }
-        return @this;
     }
 }
